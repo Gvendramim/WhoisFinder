@@ -30,6 +30,7 @@ Este plugin utiliza a **WhoisXML API** para consultas de domínio Whois. Para co
 1. Crie uma conta em [WhoisXML API](https://www.whoisxmlapi.com/).
 2. Obtenha sua chave de API.
 3. No arquivo `whoisfinder-functions.php`, adicione a chave de API na linha:
+   
    ```php
    $whois_api_key = 'SUA_CHAVE_DE_API_AQUI';
 
