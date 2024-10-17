@@ -1,0 +1,96 @@
+.wf-container {
+    font-family: 'Poppins', sans-serif;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 800px;
+    margin: 50px auto;
+    color: #333;
+}
+
+.wf-container h1, .wf-container h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.wf-ip {
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: #007bff;
+    margin-bottom: 30px;
+}
+
+.wf-info, .wf-whois-info {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.wf-info p, .wf-whois-info p {
+    margin: 8px 0;
+    font-size: 1rem;
+}
+
+.wf-info span, .wf-whois-info span {
+    font-weight: 600;
+}
+
+.wf-section-title {
+    font-size: 1.5rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: #007bff;
+    text-align: center;
+}
+
+.wf-whois-form {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.wf-whois-form input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.wf-whois-form button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.wf-whois-form button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+    .wf-container {
+        padding: 20px;
+    }
+    .wf-container h1, .wf-container h2 {
+        font-size: 1.5rem;
+    }
+    .wf-ip {
+        font-size: 1.5rem;
+    }
+    .wf-section-title {
+        font-size: 1.2rem;
+    }
+    .wf-whois-form input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .wf-whois-form button {
+        width: 100%;
+        margin-left: 0;
+    }
+}
