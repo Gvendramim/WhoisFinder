@@ -4,9 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; 
 }
 
-/**
- * Enfileira os scripts e estilos necessários.
- */
 function wf_enqueue_scripts() {
     wp_enqueue_style( 'wf-google-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap', false );
     wp_enqueue_style( 'wf-styles', plugin_dir_url( __FILE__ ) . '../css/wf-styles.css' );
@@ -18,9 +15,6 @@ function wf_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'wf_enqueue_scripts' );
 
-/**
- * Cria o shortcode para exibir as informações.
- */
 function wf_shortcode() {
     ob_start();
     ?>
@@ -43,16 +37,11 @@ function wf_shortcode() {
 }
 add_shortcode( 'whoisfinder', 'wf_shortcode' );
 
-/**
- * Manipulador AJAX para buscar detalhes do IP.
- */
 function wf_fetch_ip_details() {
     check_ajax_referer( 'wf_ajax_nonce', 'nonce' );
 
-    // Obter o endereço IP do usuário
     $ip_address = $_SERVER['REMOTE_ADDR'];
 
-    // Chamada para a API de geolocalização
     $response = wp_remote_get( 'https://ipwhois.app/json/' . $ip_address );
 
     if ( is_wp_error( $response ) ) {
@@ -71,9 +60,6 @@ function wf_fetch_ip_details() {
 add_action( 'wp_ajax_wf_fetch_ip_details', 'wf_fetch_ip_details' );
 add_action( 'wp_ajax_nopriv_wf_fetch_ip_details', 'wf_fetch_ip_details' );
 
-/**
- * Manipulador AJAX para buscar informações Whois.
- */
 function wf_fetch_whois_info() {
     check_ajax_referer( 'wf_ajax_nonce', 'nonce' );
 
