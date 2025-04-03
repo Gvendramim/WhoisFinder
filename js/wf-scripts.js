@@ -1,64 +1,74 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
+    const $ipInfo = $('#wf-ip-info');
+    const $userIP = $('#wf-user-ip');
+    const $whoisInfo = $('#wf-whois-info');
+    const $domainInput = $('#wf-domain-input');
+    const $buscarBtn = $('#wf-buscar-btn');
 
-    // Função para buscar detalhes do IP
+    function showLoading(target) {
+        target.html('<p>Carregando...</p>');
+    }
+
     function fetchIPDetails() {
-        $.ajax({
-            url: wf_ajax_object.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'wf_fetch_ip_details',
-                nonce: wf_ajax_object.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    const ipData = response.data;
-                    $('#wf-user-ip').text(ipData.ip);
-                    $('#wf-ip-info').html(`
-                        <p><span>País:</span> ${ipData.country}</p>
-                        <p><span>Cidade:</span> ${ipData.city}</p>
-                        <p><span>Provedor:</span> ${ipData.isp}</p>
-                        <p><span>Latitude:</span> ${ipData.latitude}</p>
-                        <p><span>Longitude:</span> ${ipData.longitude}</p>
-                    `);
-                } else {
-                    $('#wf-ip-info').text('Não foi possível carregar as informações do IP.');
-                }
+        showLoading($ipInfo);
+
+        $.post(wf_ajax_object.ajax_url, {
+            action: 'wf_fetch_ip_details',
+            nonce: wf_ajax_object.nonce
+        })
+        .done(response => {
+            if (response.success) {
+                const { ip, country, city, isp, latitude, longitude } = response.data;
+                $userIP.text(ip);
+                $ipInfo.html(`
+                    <p><strong>País:</strong> ${country}</p>
+                    <p><strong>Cidade:</strong> ${city}</p>
+                    <p><strong>Provedor:</strong> ${isp}</p>
+                    <p><strong>Latitude:</strong> ${latitude}</p>
+                    <p><strong>Longitude:</strong> ${longitude}</p>
+                `);
+            } else {
+                $ipInfo.html('<p>Não foi possível carregar as informações do IP.</p>');
             }
+        })
+        .fail(() => {
+            $ipInfo.html('<p>Erro na requisição. Tente novamente mais tarde.</p>');
         });
     }
 
-    // Função para buscar informações Whois
-    $('#wf-buscar-btn').on('click', function() {
-        const domain = $('#wf-domain-input').val();
-        if (domain === '') {
-            alert('Por favor, insira um domínio.');
+    $buscarBtn.on('click', function () {
+        const domain = $domainInput.val().trim();
+        
+        if (!domain) {
+            alert('Por favor, insira um domínio válido.');
             return;
         }
 
-        $.ajax({
-            url: wf_ajax_object.ajax_url,
-            type: 'POST',
-            data: {
-                action: 'wf_fetch_whois_info',
-                nonce: wf_ajax_object.nonce,
-                domain: domain
-            },
-            success: function(response) {
-                if (response.success) {
-                    const whoisData = response.data;
-                    $('#wf-whois-info').html(`
-                        <p><span>Domínio:</span> ${whoisData.domainName}</p>
-                        <p><span>Data de Criação:</span> ${whoisData.createdDate}</p>
-                        <p><span>Última Atualização:</span> ${whoisData.updatedDate}</p>
-                        <p><span>Servidor Whois:</span> ${whoisData.whoisServer}</p>
-                        <p><span>Status:</span> ${whoisData.status}</p>
-                    `);
-                } else {
-                    $('#wf-whois-info').text('Não foi possível obter informações Whois.');
-                }
+        showLoading($whoisInfo);
+
+        $.post(wf_ajax_object.ajax_url, {
+            action: 'wf_fetch_whois_info',
+            nonce: wf_ajax_object.nonce,
+            domain: domain
+        })
+        .done(response => {
+            if (response.success) {
+                const { domainName, createdDate, updatedDate, whoisServer, status } = response.data;
+                $whoisInfo.html(`
+                    <p><strong>Domínio:</strong> ${domainName}</p>
+                    <p><strong>Data de Criação:</strong> ${createdDate || 'N/A'}</p>
+                    <p><strong>Última Atualização:</strong> ${updatedDate || 'N/A'}</p>
+                    <p><strong>Servidor Whois:</strong> ${whoisServer || 'N/A'}</p>
+                    <p><strong>Status:</strong> ${status || 'N/A'}</p>
+                `);
+            } else {
+                $whoisInfo.html('<p>Não foi possível obter informações Whois.</p>');
             }
+        })
+        .fail(() => {
+            $whoisInfo.html('<p>Erro na requisição. Tente novamente mais tarde.</p>');
         });
     });
-    
+
     fetchIPDetails();
 });
