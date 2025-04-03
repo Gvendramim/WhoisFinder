@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WhoisFinder
  * Description: Exibe informações detalhadas sobre o IP do usuário e permite a busca de informações Whois de domínios.
- * Version: 1.1
+ * Version: 1.2
  * Author: Gabriel Vendramim
  */
 
