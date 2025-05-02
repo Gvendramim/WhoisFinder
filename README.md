@@ -11,7 +11,7 @@
 
 - WordPress 5.0 ou superior
 - PHP 7.0 ou superior
-- Chave de API da [WhoisXML API](https://www.whoisxmlapi.com/)
+- Chave de API da [WhoisXML API](https://www.whoisxmlapi.com/) 
 
 ## Instalação
 
